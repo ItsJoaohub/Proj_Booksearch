@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Livros - Booksearch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body style="background-color: #060712;" class="min-h-screen py-8">
+    <div class="max-w-6xl mx-auto px-4">
+        <!-- Cabeçalho -->
+        <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <h1 class="text-3xl font-bold" style="color: #F7F7FF;">Lista de Livros</h1>
+                <div class="flex flex-wrap gap-2">
+                    <a href="{% url 'home' %}" class="px-4 py-2 rounded-md transition flex items-center gap-1 whitespace-nowrap" style="background-color: #3B82F6; color: #F7F7FF;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                        Home
+                    </a>
+                    <a href="{% url 'buscar_livro' %}" class="px-4 py-2 rounded-md transition flex items-center gap-1 whitespace-nowrap" style="background-color: #3B82F6; color: #F7F7FF;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        Buscar
+                    </a>
+                    <a href="{% url 'cadastrar_livro' %}" class="px-4 py-2 rounded-md transition flex items-center gap-1 whitespace-nowrap" style="background-color: #A855F7; color: #F7F7FF;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Cadastrar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+            <p style="color: #B0B3D1;">
+                <span class="font-semibold" style="color: #F7F7FF;">Total de livros cadastrados:</span> 
+                <span class="font-bold" style="color: #3B82F6;">{{ livros|length }}</span>
+            </p>
+        </div>
+
+        <!-- Lista de Livros -->
+        {% if livros %}
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for livro in livros %}
+                    <div class="rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow" style="background-color: #101122; border: 1px solid #2A2B40;">
+                        <div class="mb-4">
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded" style="background-color: rgba(59, 130, 246, 0.2); color: #3B82F6;">
+                                ID: {{ livro.id }}
+                            </span>
+                        </div>
+                        <h2 class="text-xl font-bold mb-2" style="color: #F7F7FF;">{{ livro.titulo }}</h2>
+                        <p class="mb-3" style="color: #B0B3D1;">
+                            <span class="font-semibold" style="color: #F7F7FF;">Autor:</span> {{ livro.autor }}
+                        </p>
+                        <p class="text-sm leading-relaxed" style="color: #B0B3D1;">
+                            {{ livro.descricao|truncatewords:20 }}
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="rounded-lg shadow-md p-12 text-center" style="background-color: #101122; border: 1px solid #2A2B40;">
+                <div class="flex justify-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16" style="color: #B0B3D1;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-semibold mb-4" style="color: #F7F7FF;">Nenhum livro cadastrado</h2>
+                <p class="mb-6" style="color: #B0B3D1;">Comece cadastrando o primeiro livro no sistema.</p>
+                <a href="{% url 'cadastrar_livro' %}" class="inline-block px-6 py-3 rounded-md transition font-medium" style="background-color: #3B82F6; color: #F7F7FF;" onmouseover="this.style.backgroundColor='#2563EB'" onmouseout="this.style.backgroundColor='#3B82F6'">
+                    Cadastrar Primeiro Livro
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Livros - Booksearch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body style="background-color: #060712;" class="min-h-screen py-8">
+    <div class="max-w-4xl mx-auto px-4">
+        <!-- Cabeçalho -->
+        <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <h1 class="text-3xl font-bold" style="color: #F7F7FF;">Buscar Livros</h1>
+                <div class="flex flex-wrap gap-2">
+                    <a href="{% url 'home' %}" class="px-4 py-2 rounded-md transition flex items-center gap-1 whitespace-nowrap" style="background-color: #3B82F6; color: #F7F7FF;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>
+                        Home
+                    </a>
+                    <a href="{% url 'listar_livros' %}" class="px-4 py-2 rounded-md transition flex items-center gap-1 whitespace-nowrap" style="background-color: #22C55E; color: #F7F7FF;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                        </svg>
+                        Ver Todos
+                    </a>
+                    <a href="{% url 'cadastrar_livro' %}" class="px-4 py-2 rounded-md transition flex items-center gap-1 whitespace-nowrap" style="background-color: #A855F7; color: #F7F7FF;">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                        Cadastrar
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Busca -->
+        <div class="rounded-lg shadow-md p-8 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+            <h2 class="text-xl font-semibold mb-4" style="color: #F7F7FF;">Digite o ID ou Título do livro</h2>
+            <form method="GET" action="{% url 'buscar_livro' %}" class="space-y-4">
+                <div>
+                    <input 
+                        type="text" 
+                        name="q" 
+                        value="{{ query|default:'' }}"
+                        placeholder="Digite o ID ou título do livro..."
+                        class="w-full px-4 py-3 rounded-md focus:outline-none transition text-lg"
+                        style="background-color: #060712; border: 1px solid #2A2B40; color: #F7F7FF;"
+                        onfocus="this.style.borderColor='#3B82F6'; this.style.boxShadow='0 0 0 2px rgba(59, 130, 246, 0.2)'"
+                        onblur="this.style.borderColor='#2A2B40'; this.style.boxShadow='none'"
+                    >
+                </div>
+                <button 
+                    type="submit" 
+                    class="w-full py-3 px-6 rounded-md focus:outline-none focus:ring-2 transition font-medium text-lg flex items-center justify-center gap-2"
+                    style="background-color: #3B82F6; color: #F7F7FF;"
+                    onmouseover="this.style.backgroundColor='#2563EB'" onmouseout="this.style.backgroundColor='#3B82F6'"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                    Buscar
+                </button>
+            </form>
+        </div>
+
+        <!-- Informação sobre métodos de busca -->
+        <div class="rounded-lg p-6" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid #2A2B40;">
+            <h3 class="text-lg font-semibold mb-3 flex items-center gap-2" style="color: #F7F7FF;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a2.5 2.5 0 0 0 .05 1.852l-.548 1.016a.75.75 0 0 1-.816.427l-1.07-.195a.75.75 0 0 0-.816.427l-1.07-.195a.75.75 0 0 1-.816-.427l-.548-1.016a2.5 2.5 0 0 0-.05-1.852l-.708-2.836a.75.75 0 0 1 .852-1.063l.041.02M12 9v.008m0 3-.008.008M12 15v.008m0 3-.008.008" />
+                </svg>
+                Sobre a Busca
+            </h3>
+            <p class="text-sm leading-relaxed" style="color: #B0B3D1;">
+                A busca será realizada utilizando três métodos diferentes: <strong style="color: #F7F7FF;">Busca Sequencial</strong>, 
+                <strong style="color: #F7F7FF;">Busca Indexada</strong> e <strong style="color: #F7F7FF;">Busca com Tabela Hash</strong>. 
+                Os resultados mostrarão o desempenho de cada método para comparação.
+            </p>
+        </div>
+
+        <!-- Resultados da Busca -->
+        {% if query and resultados %}
+            <div class="mt-6">
+                <h2 class="text-2xl font-bold mb-4" style="color: #F7F7FF;">Resultados da Busca: "{{ query }}"</h2>
+                
+                <!-- Tabela Comparativa de Tempos -->
+                <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+                    <h3 class="text-xl font-semibold mb-4" style="color: #F7F7FF;">Comparação de Desempenho</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead>
+                                <tr style="background-color: #060712;">
+                                    <th class="px-4 py-3 text-left font-semibold" style="border: 1px solid #2A2B40; color: #F7F7FF;">Método</th>
+                                    <th class="px-4 py-3 text-left font-semibold" style="border: 1px solid #2A2B40; color: #F7F7FF;">Tempo de Execução</th>
+                                    <th class="px-4 py-3 text-left font-semibold" style="border: 1px solid #2A2B40; color: #F7F7FF;">Resultado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for key, resultado_metodo in resultados.items %}
+                                <tr style="border: 1px solid #2A2B40;" onmouseover="this.style.backgroundColor='#060712'" onmouseout="this.style.backgroundColor='transparent'">
+                                    <td class="px-4 py-3 font-medium" style="border: 1px solid #2A2B40; color: #F7F7FF;">
+                                        {{ resultado_metodo.metodo }}
+                                    </td>
+                                    <td class="px-4 py-3" style="border: 1px solid #2A2B40;">
+                                        <span class="font-mono" style="color: #3B82F6;">{{ resultado_metodo.tempo_execucao }} ms</span>
+                                    </td>
+                                    <td class="px-4 py-3" style="border: 1px solid #2A2B40;">
+                                        {% if resultado_metodo.resultado %}
+                                            <span class="font-semibold" style="color: #22C55E;">✓ Encontrado</span>
+                                        {% else %}
+                                            <span class="font-semibold" style="color: #EF4444;">✗ Não encontrado</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cards Individuais dos Métodos -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Busca Sequencial -->
+                    <div class="rounded-lg shadow-md p-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold" style="color: #F7F7FF;">Busca Sequencial</h3>
+                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background-color: rgba(59, 130, 246, 0.2); color: #3B82F6;">O(n)</span>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-sm mb-2" style="color: #B0B3D1;">Tempo de execução:</p>
+                            <p class="text-2xl font-mono" style="color: #3B82F6;">{{ resultados.sequencial.tempo_execucao }} ms</p>
+                        </div>
+                        {% if resultados.sequencial.resultado %}
+                            <div class="pt-4" style="border-top: 1px solid #2A2B40;">
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">ID:</strong> {{ resultados.sequencial.resultado.id }}</p>
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Título:</strong> {{ resultados.sequencial.resultado.titulo }}</p>
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Autor:</strong> {{ resultados.sequencial.resultado.autor }}</p>
+                                <p class="text-sm" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Descrição:</strong> {{ resultados.sequencial.resultado.descricao|truncatewords:15 }}</p>
+                            </div>
+                        {% else %}
+                            <div class="pt-4" style="border-top: 1px solid #2A2B40;">
+                                <p class="font-semibold" style="color: #EF4444;">Livro não encontrado</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Busca Indexada -->
+                    <div class="rounded-lg shadow-md p-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold" style="color: #F7F7FF;">Busca Indexada</h3>
+                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background-color: rgba(34, 197, 94, 0.2); color: #22C55E;">O(log n)</span>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-sm mb-2" style="color: #B0B3D1;">Tempo de execução:</p>
+                            <p class="text-2xl font-mono" style="color: #22C55E;">{{ resultados.indexada.tempo_execucao }} ms</p>
+                        </div>
+                        {% if resultados.indexada.resultado %}
+                            <div class="pt-4" style="border-top: 1px solid #2A2B40;">
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">ID:</strong> {{ resultados.indexada.resultado.id }}</p>
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Título:</strong> {{ resultados.indexada.resultado.titulo }}</p>
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Autor:</strong> {{ resultados.indexada.resultado.autor }}</p>
+                                <p class="text-sm" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Descrição:</strong> {{ resultados.indexada.resultado.descricao|truncatewords:15 }}</p>
+                            </div>
+                        {% else %}
+                            <div class="pt-4" style="border-top: 1px solid #2A2B40;">
+                                <p class="font-semibold" style="color: #EF4444;">Livro não encontrado</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Busca HashMap -->
+                    <div class="rounded-lg shadow-md p-6" style="background-color: #101122; border: 1px solid #2A2B40;">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold" style="color: #F7F7FF;">Busca HashMap</h3>
+                            <span class="text-xs font-semibold px-2 py-1 rounded" style="background-color: rgba(168, 85, 247, 0.2); color: #A855F7;">O(1)</span>
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-sm mb-2" style="color: #B0B3D1;">Tempo de execução:</p>
+                            <p class="text-2xl font-mono" style="color: #A855F7;">{{ resultados.hashmap.tempo_execucao }} ms</p>
+                        </div>
+                        {% if resultados.hashmap.resultado %}
+                            <div class="pt-4" style="border-top: 1px solid #2A2B40;">
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">ID:</strong> {{ resultados.hashmap.resultado.id }}</p>
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Título:</strong> {{ resultados.hashmap.resultado.titulo }}</p>
+                                <p class="text-sm mb-2" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Autor:</strong> {{ resultados.hashmap.resultado.autor }}</p>
+                                <p class="text-sm" style="color: #B0B3D1;"><strong style="color: #F7F7FF;">Descrição:</strong> {{ resultados.hashmap.resultado.descricao|truncatewords:15 }}</p>
+                            </div>
+                        {% else %}
+                            <div class="pt-4" style="border-top: 1px solid #2A2B40;">
+                                <p class="font-semibold" style="color: #EF4444;">Livro não encontrado</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% elif query %}
+            <div class="rounded-lg p-6 mt-6" style="background-color: rgba(234, 179, 8, 0.1); border: 1px solid #2A2B40;">
+                <p style="color: #F7F7FF;">
+                    <strong>Atenção:</strong> Nenhum resultado encontrado para: <strong>{{ query }}</strong>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
