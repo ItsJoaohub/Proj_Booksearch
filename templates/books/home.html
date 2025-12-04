@@ -7,7 +7,7 @@
     <title>Booksearch - Sistema de Busca de Livros</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen" style="background-color: #060712; background-image: linear-gradient(rgba(6, 7, 18, 0.7), rgba(6, 7, 18, 0.7)), url('{% static 'images/background.png' %}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
+<body class="min-h-screen" style="background-color: #060712; background-image: linear-gradient(rgba(6, 7, 18, 0.7), rgba(6, 7, 18, 0.7)), url('{% static "image/fundo.png" %}'); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;">
     <div class="container mx-auto px-4 py-8">
         <!-- Cabeçalho -->
         <header class="text-center mb-4">
@@ -66,7 +66,6 @@
             </div>
         </section>
 
-        <!-- Ações/Navegação -->
         <section class="rounded-lg shadow-lg p-8" style="background-color: #101122; border: 1px solid #2A2B40;">
             <div class="flex justify-center">
                 <a href="{% url 'buscar_livro' %}" class="inline-block">
