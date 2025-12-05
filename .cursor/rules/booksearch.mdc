@@ -1,5 +1,0 @@
----
-alwaysApply: true
-
----
-A ideia do projeto é desenvolver uma aplicação web que demonstre, de forma prática e comparativa, o funcionamento de três algoritmos de busca estudados na disciplina de Algoritmos e Estruturas de Dados: busca sequencial, busca indexada e busca utilizando tabela hash (HashMap). Para isso, será utilizado como contexto um sistema simples de administração de biblioteca, no qual será mantido um cadastro de pelo menos 5.000 livros. Cada livro terá um identificador numérico próprio (ID lógico), além de informações como título, autor e uma breve descrição.Na interface principal da aplicação, o usuário poderá realizar buscas informando o ID ou o título de um livro na barra de pesquisa. A partir desse único termo digitado, o sistema executará internamente os três tipos de busca sobre a mesma coleção de 5.000 registros. Para isso, os dados serão carregados do banco SQLite  O projeto deve ser sempre em português e utilizar django e tailwind para o frontend. Sempre utilize o sql puro e não utilizar a ORM do django
