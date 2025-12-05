@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <!-- Formulário de Busca -->
+
         <div class="rounded-lg shadow-md p-8 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
             <h2 class="text-xl font-semibold mb-4" style="color: #F7F7FF;">Digite o ID ou Título do livro</h2>
             <form method="GET" action="{% url 'buscar_livro' %}" class="space-y-4">
@@ -65,7 +65,7 @@
             </form>
         </div>
 
-        <!-- Informação sobre métodos de busca -->
+
         <div class="rounded-lg p-6" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid #2A2B40;">
             <h3 class="text-lg font-semibold mb-3 flex items-center gap-2" style="color: #F7F7FF;">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -80,12 +80,11 @@
             </p>
         </div>
 
-        <!-- Resultados da Busca -->
+
         {% if query and resultados %}
             <div class="mt-6">
                 <h2 class="text-2xl font-bold mb-4" style="color: #F7F7FF;">Resultados da Busca: "{{ query }}"</h2>
                 
-                <!-- Tabela Comparativa de Tempos -->
                 <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
                     <h3 class="text-xl font-semibold mb-4" style="color: #F7F7FF;">Comparação de Desempenho</h3>
                     <div class="overflow-x-auto">
@@ -120,9 +119,9 @@
                     </div>
                 </div>
 
-                <!-- Cards Individuais dos Métodos -->
+
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Busca Sequencial -->
+
                     <div class="rounded-lg shadow-md p-6" style="background-color: #101122; border: 1px solid #2A2B40;">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold" style="color: #F7F7FF;">Busca Sequencial</h3>
@@ -146,7 +145,7 @@
                         {% endif %}
                     </div>
 
-                    <!-- Busca Indexada -->
+
                     <div class="rounded-lg shadow-md p-6" style="background-color: #101122; border: 1px solid #2A2B40;">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold" style="color: #F7F7FF;">Busca Indexada</h3>
@@ -170,7 +169,7 @@
                         {% endif %}
                     </div>
 
-                    <!-- Busca HashMap -->
+
                     <div class="rounded-lg shadow-md p-6" style="background-color: #101122; border: 1px solid #2A2B40;">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold" style="color: #F7F7FF;">Busca HashMap</h3>

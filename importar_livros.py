@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Script para importar livros da API Open Library para o banco de dados.
 Busca 5.000 livros e insere diretamente no banco SQLite usando Django.
@@ -9,14 +8,13 @@ import sys
 import time
 import textwrap
 
-# Adicionar o diretório do projeto ao Python path
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
 import django
 
-# Configurar Django antes de importar models/connection
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
 django.setup()
 
@@ -27,8 +25,8 @@ from django.conf import settings
 
 BASE_URL = "https://openlibrary.org/search.json"
 TOTAL_LIVROS = 5000
-LIMITE_POR_PAGINA = 100  # máximo padrão da Search API
-CONSULTA = "subject:fiction"  # busca por assunto para trazer muitos livros
+LIMITE_POR_PAGINA = 100  
+CONSULTA = "subject:fiction"  
 
 
 def buscar_pagina(offset: int):
@@ -57,7 +55,7 @@ def gerar_descricao(titulo: str, autor: str) -> str:
         f'escrito por {autor}. Este registro foi gerado para testes de sistemas de '
         f'biblioteca, focando em consultas, buscas e desempenho em bancos de dados.'
     )
-    # garante descrição não muito longa
+    
     return textwrap.shorten(base, width=300, placeholder="...")
 
 
@@ -77,14 +75,14 @@ def inserir_livros_batch(livros: list):
     if not livros:
         return 0
     
-    # Preparar dados validados
+    
     dados_validos = []
     for titulo, autor, descricao in livros:
-        # Validar e truncar campos
+        
         titulo = validar_e_truncar(titulo, 200, "Título")
         autor = validar_e_truncar(autor, 200, "Autor")
         
-        # Pular se título ou autor estiverem vazios após validação
+        
         if not titulo or not autor:
             continue
         
@@ -95,7 +93,7 @@ def inserir_livros_batch(livros: list):
         return 0
     
     inseridos = 0
-    # Usar conexão SQLite direta para evitar problemas com debug SQL do Django
+    
     db_path = str(settings.DATABASES['default']['NAME'])
     try:
         conn = sqlite3.connect(db_path)
@@ -109,7 +107,7 @@ def inserir_livros_batch(livros: list):
                 )
                 inseridos += 1
             except Exception as e:
-                # Escapar % para evitar problemas na formatação da mensagem
+                
                 titulo_safe = str(titulo[:50]).replace('%', '%%')
                 print(f"  Erro ao inserir livro '{titulo_safe}...': {str(e)}")
                 continue
@@ -138,7 +136,7 @@ def main():
     total_inseridos = 0
     inicio = time.time()
     
-    # Verificar quantos livros já existem
+    
     with connection.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) FROM books_livro")
         livros_existentes = cursor.fetchone()[0]
@@ -156,7 +154,7 @@ def main():
         
         print(f"Encontrados {len(docs)} resultados")
         
-        # Processar documentos da página
+        
         livros_pagina = []
         for doc in docs:
             titulo = doc.get("title")
@@ -174,7 +172,7 @@ def main():
             if len(livros_coletados) >= TOTAL_LIVROS:
                 break
         
-        # Inserir em lotes para melhor performance
+        
         if livros_pagina:
             inseridos = inserir_livros_batch(livros_pagina)
             total_inseridos += inseridos
@@ -188,7 +186,7 @@ def main():
         
         offset += LIMITE_POR_PAGINA
         
-        # Evitar bater muito rápido na API
+        
         time.sleep(0.3)
     
     tempo_total = time.time() - inicio
@@ -200,7 +198,7 @@ def main():
     print(f"Total de livros inseridos: {total_inseridos}")
     print(f"Tempo total: {tempo_total:.2f} segundos")
     
-    # Verificar total final no banco
+    
     with connection.cursor() as cursor:
         cursor.execute("SELECT COUNT(*) FROM books_livro")
         total_final = cursor.fetchone()[0]
