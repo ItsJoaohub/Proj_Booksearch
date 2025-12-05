@@ -43,9 +43,6 @@ python manage.py migrate
 ```bash
 python manage.py runserver
 ```
-
-4. Acesse o projeto em: http://127.0.0.1:8000/
-
 ## Comandos Úteis
 
 - Criar uma nova app: `python manage.py startapp <nome_da_app>`
