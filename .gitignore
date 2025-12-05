@@ -28,7 +28,6 @@ db.sqlite3
 db.sqlite3-journal
 /media
 /staticfiles
-/static
 
 # Ambiente Virtual
 venv/
@@ -40,6 +39,7 @@ venv.bak/
 # IDEs
 .vscode/
 .idea/
+.cursor/
 *.swp
 *.swo
 *~

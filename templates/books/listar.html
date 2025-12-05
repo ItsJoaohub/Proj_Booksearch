@@ -8,7 +8,7 @@
 </head>
 <body style="background-color: #060712;" class="min-h-screen py-8">
     <div class="max-w-6xl mx-auto px-4">
-        <!-- Cabeçalho -->
+    
         <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <h1 class="text-3xl font-bold" style="color: #F7F7FF;">Lista de Livros</h1>
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <!-- Estatísticas -->
+        
         <div class="rounded-lg shadow-md p-6 mb-6" style="background-color: #101122; border: 1px solid #2A2B40;">
             <p style="color: #B0B3D1;">
                 <span class="font-semibold" style="color: #F7F7FF;">Total de livros cadastrados:</span> 
@@ -43,7 +43,7 @@
             </p>
         </div>
 
-        <!-- Lista de Livros -->
+    
         {% if livros %}
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for livro in livros %}
